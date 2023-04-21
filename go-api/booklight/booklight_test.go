@@ -7,6 +7,7 @@ import (
 	"log"
 	"net"
 	"net/http"
+	sync "sync"
 	"testing"
 
 	"google.golang.org/grpc"
@@ -27,11 +28,16 @@ func (s *server) Get(ctx context.Context, req *BooksRequest) (*BooksResponse, er
 }
 
 func TestHttpServerReturnsBooks(t *testing.T) {
+	log.Println("Starting test")
 	grpcEndpoint := "localhost:9090"
 	httpEndpoint := "localhost:8080"
 
 	go StartHttpServer(grpcEndpoint, httpEndpoint)
-	go startGrpcServer(grpcEndpoint)
+
+	var wg sync.WaitGroup
+	wg.Add(1)
+	go startGrpcServer(grpcEndpoint, &wg)
+	wg.Wait()
 
 	title := "parenting"
 	url :=  "http://" + httpEndpoint + "/api/search?q=" + title
@@ -69,13 +75,14 @@ func TestHttpServerReturnsBooks(t *testing.T) {
     }
 }
 
-func startGrpcServer(grpcEndpoint string) {
+func startGrpcServer(grpcEndpoint string, wg *sync.WaitGroup) {
 	listener, err := net.Listen("tcp", grpcEndpoint)
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
 	s := grpc.NewServer()
 	RegisterBooksServer(s, &server{})
+	wg.Done()
 	if err := s.Serve(listener); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}
