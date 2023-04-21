@@ -1,0 +1,25 @@
+syntax = "proto3";
+package booklight;
+option go_package = "github.com/BogdanYarotsky/booklight";
+
+message BooksRequest {
+  string query = 1;
+}
+
+message BooksResponse {
+  repeated Book books = 1;
+}
+
+message Book {
+  string title = 1;
+  string url = 2;
+  string image_url = 3;
+  float rating = 4;
+  int32 reviews = 5;
+  repeated string authors = 6;
+  float score = 7;
+}
+
+service Books {
+  rpc Get (BooksRequest) returns (BooksResponse) {}
+}
