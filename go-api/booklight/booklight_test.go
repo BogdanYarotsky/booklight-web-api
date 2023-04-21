@@ -32,7 +32,7 @@ func TestHttpServerReturnsBooks(t *testing.T) {
 	httpEndpoint := "localhost:8080"
 	go StartHttpServer(grpcEndpoint, httpEndpoint)
 	go startGrpcServer(grpcEndpoint)
-	time.Sleep(3 * time.Second)
+	time.Sleep(1 * time.Second)
 
 	title := "parenting"
 	url :=  "http://" + httpEndpoint + "/api/search?q=" + title
