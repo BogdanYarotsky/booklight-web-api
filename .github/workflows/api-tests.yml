@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./ts-worker
+        working-directory: ./go-api
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-go@v4
