@@ -55,11 +55,11 @@ func TestHttpServerReturnsBooks(t *testing.T) {
         t.Fatalf("Failed to read response body: %v", err)
     }
 
+	t.Logf("This was returned from server: %v", string(body))
+
 	booksResp := &BooksResponse{}
 	err = json.Unmarshal(body, booksResp)
     if err != nil {
-		str := string(body)
-		t.Logf("This was returned from server: %v", str)
         t.Fatalf("Failed to unmarshal response body: %v", err)
     }
 
