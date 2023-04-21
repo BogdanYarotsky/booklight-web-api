@@ -1,0 +1,2 @@
+protoc --proto_path=./ --ts_proto_out=./ts-worker/ --plugin=protoc-gen-ts_proto=.\ts-worker\node_modules\.bin\protoc-gen-ts_proto.cmd --ts_proto_opt=outputServices=grpc-js books.proto
+protoc --proto_path=./ --go_out=./go-api/booklight --go-grpc_out=./go-api/booklight --go_opt=paths=source_relative --go-grpc_opt=paths=source_relative books.proto
