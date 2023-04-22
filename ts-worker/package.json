@@ -6,12 +6,10 @@
   "scripts": {
     "build": "npm run build:typescript",
     "build:typescript": "tsc -p .",
-    "build:proto": "./compile-proto.ps1",
     "watch": "npm run build:typescript -- -w",
-    "prewatch": "npm run build:proto",
-    "prebuild": "npm run build:proto",
     "start:server": "node app",
-    "test": "jest"
+    "test": "jest",
+    "start": "node app.js"
   },
   "keywords": [],
   "author": "",

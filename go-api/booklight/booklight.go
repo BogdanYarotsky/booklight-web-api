@@ -12,5 +12,6 @@ func StartHttpServer(grpcEndpoint string, httpEndpoint string) {
 	}
 	defer conn.Close()
 	server := &booksHttpServer{client: client}
+	log.Printf("starting server on %v", httpEndpoint)
 	log.Fatal(http.ListenAndServe(httpEndpoint, server))
 }
